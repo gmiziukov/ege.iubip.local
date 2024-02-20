@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор ЕГЭ для абитуриентов</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .text-dark-blue {
+            color: #0a4093;
+        }
+
+        .bg-dark-blue {
+            background-color: rgb(10 64 147);
+        }
+    </style>
+</head>
+
+<body class="font-light text-gray-900 antialiased">
+    <div class="container mx-auto flex flex-col space-y-6 px-4 py-2">
+        <div class="h-60 lg:h-72 xl:h-[28rem] bg-cover relative" style="background-image: url('head.png');">
+            <span class="absolute top-24 lg:top-28 xl:top-40 left-2 w-72 xl:w-96 text-dark-blue text-5xl xl:text-7xl font-semibold">Калькулятор баллов <span class="text-red-500">ЕГЭ</span></span>
+            <a href="http://iubip.ru/abitur/">
+                <div class="flex flex-row space-x-2 absolute top-2 xl:top-5 left-0">
+                    <img src="logo.svg" class="h-12 lg:h-14 xl:h-16">
+                    <div class="flex flex-col">
+                        <span class="text-dark-blue text-sm lg:text-base xl:text-xl font-semibold">ЮЖНЫЙ УНИВЕРСИТЕТ (ИУБиП)</span>
+                        <span class="text-dark-blue text-sm lg:text-base xl:text-xl">SOUTHERN UNIVERSITY (IMBL)</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <h1 class="text-dark-blue text-2xl md:text-3xl lg:text-3xl font-semibold">Введите свои баллы ЕГЭ</h1>
+
+        <div class="grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 lg:grid-cols-4">
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Русский язык</h1>
+                <input type="text" id="russian_language_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Математика</h1>
+                <input type="text" id="mathematics_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Биология</h1>
+                <input type="text" id="biology_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Обществознание</h1>
+                <input type="text" id="social_studies_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">История</h1>
+                <input type="text" id="history_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Информатика и ИКТ</h1>
+                <input type="text" id="informatics_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Физика</h1>
+                <input type="text" id="physics_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+
+            <div class="flex-col space-y-4">
+                <h1 class="text-dark-blue text-base md:text-xl lg:text-xl font-semibold">Английский язык</h1>
+                <input type="text" id="english_language_ball" class="w-16 bg-dark-blue border-white rounded p-2 text-white text-center placeholder-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white" placeholder="00">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button onclick="getResult()" class="w-64 bg-red-500 hover:bg-red-600 rounded shadow-xl px-2 py-2 text-white text-lg font-semibold">Узнать мои шансы</button>
+        </div>
+
+        <div id="list_of_sp" class="p-4 text-sm md:text-base text-justify"></div>
+    </div>
+
+    <script>
+        function getResult() {
+            var russian_language_ball = document.getElementById('russian_language_ball').value;
+            var mathematics_ball = document.getElementById('mathematics_ball').value;
+            var biology_ball = document.getElementById('biology_ball').value;
+            var social_studies_ball = document.getElementById('social_studies_ball').value;
+            var history_ball = document.getElementById('history_ball').value;
+            var informatics_ball = document.getElementById('informatics_ball').value;
+            var physics_ball = document.getElementById('physics_ball').value;
+            var english_language_ball = document.getElementById('english_language_ball').value;
+
+            var div = document.getElementById('list_of_sp');
+            div.innerHTML = '';
+
+            var result = '';
+            var listOfSpecialties = '<span class="font-semibold">';
+            var sum = 0;
+
+            var isPrintSpecialties = false;
+
+            //First combination
+            if (russian_language_ball != "" && mathematics_ball != "" && (informatics_ball != "" || physics_ball != "")) {
+
+                if (parseInt(russian_language_ball) >= 40) {
+
+                    if (parseInt(mathematics_ball) >= 39) {
+                        sum = parseInt(russian_language_ball) + parseInt(mathematics_ball);
+
+                        if (informatics_ball !== "") {
+                            if (parseInt(informatics_ball) >= 44) {
+                                sum += parseInt(informatics_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Информатике и ИКТ</strong> не соответствует минимальным требованиям в <strong>44 балла</strong><br>';
+                            }
+                        } else {
+                            if (parseInt(physics_ball) >= 39) {
+                                sum += parseInt(physics_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Физике</strong> не соответствует минимальным требованиям в <strong>39 баллов</strong><br>';
+                            }
+                        }
+
+                        if (isPrintSpecialties) {
+                            listOfSpecialties += '09.03.03 Прикладная информатика<br>';
+                        }
+
+                    } else {
+                        result += 'Ваш балл по <strong>Математике</strong> не соответствует минимальным требованиям в <strong>39 баллов</strong><br>';
+                    }
+
+                } else {
+                    result += 'Ваш балл по <strong>Русскому языку</strong> не соответствует минимальным требованиям в <strong>40 баллов</strong><br>';
+                }
+            }else if (russian_language_ball !== "" && biology_ball !== "" && (social_studies_ball !== "" || mathematics_ball !== "") && history_ball === "" && informatics_ball === "" && physics_ball === "" && english_language_ball === "") {
+
+                if (parseInt(russian_language_ball) >= 40) {
+
+                    if (parseInt(biology_ball) >= 39) {
+                        sum = parseInt(russian_language_ball) + parseInt(biology_ball);
+
+                        if (social_studies_ball !== "") {
+                            if (parseInt(social_studies_ball) >= 45) {
+                                sum += parseInt(social_studies_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Обществознанию</strong> не соответствует минимальным требованиям в <strong>45 баллов</strong><br>';
+                            }
+                        } else {
+                            if (parseInt(mathematics_ball) >= 39) {
+                                sum += parseInt(mathematics_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Математике</strong> не соответствует минимальным требованиям в <strong>39 баллов</strong><br>';
+                            }
+                        }
+
+                        if (isPrintSpecialties) {
+                            listOfSpecialties += '37.03.01 Психология<br>';
+                        }
+
+                    } else {
+                        result += 'Ваш балл по <strong>Биологии</strong> не соответствует минимальным требованиям в <strong>39 баллов</strong><br>';
+                    }
+
+                } else {
+                    result += 'Ваш балл по <strong>Русскому языку</strong> не соответствует минимальным требованиям в <strong>40 баллов</strong><br>';
+                }
+            }else if (russian_language_ball !== "" && mathematics_ball !== "" && (social_studies_ball !== "" || informatics_ball !== "") && biology_ball === "" && history_ball === "" && physics_ball === "" && english_language_ball === "") {
+
+                if (parseInt(russian_language_ball) >= 40) {
+
+                    if (parseInt(mathematics_ball) >= 39) {
+                        sum = parseInt(russian_language_ball) + parseInt(mathematics_ball);
+
+                        if (social_studies_ball !== "") {
+                            if (parseInt(social_studies_ball) >= 45) {
+                                sum += parseInt(social_studies_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Обществознанию</strong> не соответствует минимальным требованиям в <strong>45 баллов</strong><br>';
+                            }
+                        } else {
+                            if (parseInt(informatics_ball) >= 44) {
+                                sum += parseInt(informatics_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Информатике и ИКТ</strong> не соответствует минимальным требованиям в <strong>44 балла</strong><br>';
+                            }
+                        }
+
+                        if (isPrintSpecialties) {
+                            listOfSpecialties += '38.03.01 Экономика<br>';
+                            listOfSpecialties += '38.03.02 Менеджмент<br>';
+                            listOfSpecialties += '38.03.03 Управление персоналом<br>';
+                            listOfSpecialties += '38.03.05 Бизнес-информатика<br>';
+                        }
+
+                    } else {
+                        result += 'Ваш балл по <strong>Математике</strong> не соответствует минимальным требованиям в <strong>39 баллов</strong><br>';
+                    }
+
+                } else {
+                    result += 'Ваш балл по <strong>Русскому языку</strong> не соответствует минимальным требованиям в <strong>40 баллов</strong><br>';
+                }
+            }else if (russian_language_ball !== "" && social_studies_ball !== "" && (history_ball !== "" || english_language_ball !== "") && mathematics_ball === "" && biology_ball === "" && informatics_ball === "" && physics_ball === "") {
+
+                if (parseInt(russian_language_ball) >= 40) {
+
+                    if (parseInt(social_studies_ball) >= 45) {
+                        sum = parseInt(russian_language_ball) + parseInt(social_studies_ball);
+
+                        if (history_ball !== "") {
+                            if (parseInt(history_ball) >= 35) {
+                                sum += parseInt(history_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Истории</strong> не соответствует минимальным требованиям в <strong>35 баллов</strong><br>';
+                            }
+                        } else {
+                            if (parseInt(english_language_ball) >= 30) {
+                                sum += parseInt(english_language_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Иностранному языку (английский)</strong> не соответствует минимальным требованиям в <strong>30 баллов</strong><br>';
+                            }
+                        }
+
+                        if (isPrintSpecialties) {
+                            listOfSpecialties += '40.03.01 Юриспруденция<br>';
+                        }
+
+                    } else {
+                        result += 'Ваш балл по <strong>Обществознанию</strong> не соответствует минимальным требованиям в <strong>45 баллов</strong><br>';
+                    }
+
+                } else {
+                    result += 'Ваш балл по <strong>Русскому языку</strong> не соответствует минимальным требованиям в <strong>40 баллов</strong><br>';
+                }
+            }else if (russian_language_ball !== "" && history_ball !== "" && (social_studies_ball !== "" || english_language_ball !== "") && mathematics_ball === "" && biology_ball === "" && informatics_ball === "" && physics_ball === "") {
+
+                if (parseInt(russian_language_ball) >= 40) {
+
+                    if (parseInt(history_ball) >= 35) {
+                        sum = parseInt(russian_language_ball) + parseInt(history_ball);
+
+                        if (social_studies_ball !== "") {
+                            if (parseInt(social_studies_ball) >= 45) {
+                                sum += parseInt(social_studies_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Обществознанию</strong> не соответствует минимальным требованиям в <strong>45 баллов</strong><br>';
+                            }
+                        } else {
+                            if (parseInt(english_language_ball) >= 30) {
+                                sum += parseInt(english_language_ball);
+
+                                isPrintSpecialties = true;
+                            } else {
+                                result += 'Ваш балл по <strong>Иностранному языку (английский)</strong> не соответствует минимальным требованиям в <strong>30 баллов</strong><br>';
+                            }
+                        }
+
+                        if (isPrintSpecialties) {
+                            listOfSpecialties += '43.03.02 Туризм<br>';
+                        }
+
+                    } else {
+                        result += 'Ваш балл по <strong>Истории</strong> не соответствует минимальным требованиям в <strong>35 баллов</strong><br>';
+                    }
+
+                } else {
+                    result += 'Ваш балл по <strong>Русскому языку</strong> не соответствует минимальным требованиям в <strong>40 баллов</strong><br>';
+                }
+            }
+
+            if (isPrintSpecialties) {
+                result += 'С учетом выбранных вами предметов вам доступны следующие направления подготовки для поступления:<br>';
+                result += listOfSpecialties + '</span>';
+
+                if (sum >= 160 && sum < 230) {
+                    result += 'Также сумма Ваших <strong>' + sum + ' баллов </strong> позволяет вам поступить на <strong>полубюджет</strong><br>';
+                } else if (sum >= 230) {
+                    result += 'Также сумма Ваших <strong>' + sum + ' баллов </strong> позволяет вам поступить на <strong>бюджет</strong><br>';
+                }
+
+                result += '<br>Более подробно с условиями и правилами приема вы можете ознакомится в разделе сайта абитуриенту -> <a href="http://iubip.ru/abitur/informatsiya-dlya-postupayushchikh/" class="xl:border xl:border-blue-500 xl:rounded xl:p-1 text-blue-500">Информация для поступающих</a>';
+            }else {
+                result += 'По вашим критериям не найдено направлений подготовки<br>';
+            }
+
+            div.innerHTML = result;
+        }
+    </script>
+</body>
+
+</html>
